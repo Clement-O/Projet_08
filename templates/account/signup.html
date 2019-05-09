@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+{% block content %}
+    <section class="page-section" id="section-top-low">
+        <div class="container">
+            <div class="text-center">
+                <h2 id="title-section-top">Création de compte</h2>
+            </div>
+        </div>
+    </section>
+    <section class="page-section" id="section-main">
+        <div class="container">
+            <div class="text-center">
+                <p>Vous avez déjà un compte ? Vous pouvez donc vous <a href="/accounts/login">connecter</a>.</p>
+                <hr class="divider light">
+                <form method="post" class="form-group">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Création de compte</button>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

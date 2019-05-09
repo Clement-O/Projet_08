@@ -1,0 +1,33 @@
+body {
+    background: #c45525;
+}
+
+#section-top-high div{
+    height: 450px;
+    background: #345a61;
+    position: relative;
+}
+
+#section-top-low div{
+    height: 300px;
+    background: #345a61;
+    position: relative;
+}
+
+#title-section-top {
+    position: absolute;
+    color: white;
+    background: #345a61;
+    border-radius: 15px;
+    z-index: +1;
+    top: 50%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 66%;
+}
+
+#section-main {
+    background: white;
+}

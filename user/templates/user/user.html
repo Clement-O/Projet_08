@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+    <section class="page-section" id="section-top-high">
+        <div class="container">
+            <div class="text-center">
+                {% if name %}
+                    <h2 id="title-section-top-high">Bonjour,<br>{{ name }}</h2>
+                {% else %}
+                    <h2 id="title-section-top-high">Bonjour,<br>{{ mail }}</h2>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <section class="page-section" id="section-main">
+        <div class="container">
+            <div class="text-center">
+                <h2>Votre adresse mail est la suivante:</h2>
+                <h2 style="word-wrap: break-word">{{ mail }}</h2>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
