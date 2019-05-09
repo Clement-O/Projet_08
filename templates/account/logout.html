@@ -1,0 +1,22 @@
+{% extends 'core/base.html' %}
+{% block content %}
+    <section class="page-section" id="section-top-low">
+        <div class="container">
+            <div class="text-center">
+                <h2 id="title-section-top">Déconnexion</h2>
+            </div>
+        </div>
+    </section>
+    <section class="page-section" id="section-main">
+        <div class="container">
+            <div class="text-center">
+                <h3>Etes-vous sûr·e de vouloir vous déconnecter ?</h3>
+                <hr class="divider light">
+                <form method="post" action="/accounts/logout/" class="form-group">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Se Déconnecter</button>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

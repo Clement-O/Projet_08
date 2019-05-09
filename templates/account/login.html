@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+{% block content %}
+    <section class="page-section" id="section-top-low">
+        <div class="container">
+            <div class="text-center">
+                <h2 id="title-section-top">Connexion</h2>
+            </div>
+        </div>
+    </section>
+    <section class="page-section" id="section-main">
+        <div class="container">
+            <div class="text-center">
+                <form method="post" class="form-group">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Connexion</button>
+                </form>
+                <hr class="divider light">
+                <p>Pas encore de compte ? <a href="/accounts/signup">Enregistrez-vous</a> !</p>
+            </div>
+        </div>
+    </section>
+{% endblock %}
