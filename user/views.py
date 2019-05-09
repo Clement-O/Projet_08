@@ -13,5 +13,5 @@ def user_mail(request):
         }
         return render(request, 'user/user.html', context)
     else:
-        return HttpResponseRedirect('/account/login')
+        return HttpResponseRedirect('/accounts/login')
 

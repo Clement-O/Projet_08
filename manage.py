@@ -3,6 +3,11 @@
 import os
 import sys
 
+# Third party import
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'purbeurre.settings')
