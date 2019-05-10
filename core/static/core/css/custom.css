@@ -1,16 +1,77 @@
 body {
     background: #c45525;
+    font-family: "Scope One", sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Open Sans", sans-serif;
+}
+
+/* Base CSS (navbar, contact, footer) */
+#navbar-logo {
+    width: 38px;
+    height: 38px;
+    position: relative;
+    top: -2px;
+}
+
+#li-form {
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+.nav-link {
+    position: relative;
+    top: 4px
+}
+
+.fa-sign-out-alt, .fa-sign-in-alt {
+    position: relative;
+    top: 3px
+}
+
+#contact {
+    background: #345a61;
+}
+
+#contact div, #contact h2, #contact p, #contact a {
+    color: #de9440;
+}
+
+#contact hr {
+    border-color: #de9440;
+}
+
+footer a, footer a:hover {
+    color: #86ebe6;
+}
+
+/* Index CSS */
+#about {
+    background: white;
+}
+
+#colette, #remy {
+    width: 350px;
+    height: 500px;
+}
+
+/* Global CSS */
+#section-top-high {
+    background: #345a61;
 }
 
 #section-top-high div{
     height: 450px;
-    background: #345a61;
     position: relative;
+}
+
+#section-top-low {
+    background: #345a61;
 }
 
 #section-top-low div{
     height: 300px;
-    background: #345a61;
     position: relative;
 }
 

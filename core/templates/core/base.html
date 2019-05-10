@@ -3,14 +3,94 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Pur Beurre</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'core/img/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'core/img/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'core/img/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'core/img/site.webmanifest' %}">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+
+    <!-- Fonts -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"> <!-- Titles -->
+    <link href="http://fonts.googleapis.com/css?family=Scope+One" rel="stylesheet" type="text/css"> <!-- Texts -->
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'core/vendor/magnific-popup/magnific-popup.css' %}"/>
 
     <!-- Theme CSS (Includes Bootstrap) & Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/creative.min.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/custom.css' %}"/>
-
 </head>
-<body>
+<body id="page-top">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="/" title="Accueil">
+            <img src="{% static 'core/img/apple-touch-icon.png' %}" alt="Logo Pur Beurre" id="navbar-logo"> Pur Beurre
+        </a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto my-2 my-lg-0">
+                <li class="nav-item text-center" id="li-form">
+                    <!-- action="% url 'product:search' %" -->
+                    <form action="" method="get" accept-charset="utf-8">
+                        <input class="form-control" placeholder="Rechercher" name="query">
+                    </form>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger text-center" href="/user/" title="Mon compte"><span
+                                class="fas fa-user fa-2x"></span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger text-center" href="/search/user/"
+                           title="Mes produits"><span class="fas fa-carrot fa-2x"></span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger text-center" href="/accounts/logout"
+                           title="Déconnexion"><span class="fas fa-sign-out-alt fa-2x"></span></a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger text-center" href="/accounts/login"
+                           title="Connexion ou Inscription"><span class="fas fa-sign-in-alt fa-2x"></span></a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
 {% block content %}{% endblock %}
+<!-- Footer -->
+<footer class="py-5">
+    <div class="container">
+        <div class="small text-center text-muted col-md-12">
+            <a href="/disclaimer" class="col-md-6 float-left contact-link">Mentions légales</a>
+            <a href="/#contact" class="col-md-6 float-right js-scroll-trigger contact-link">Contact</a>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="{% static 'core/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'core/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Plugin JavaScript -->
+<script src="{% static 'core/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+<script src="{% static 'core/vendor/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+
+<!-- Custom scripts for this template -->
+<script src="{% static 'core/js/creative.min.js' %}"></script>
+<script src="{% static 'core/js/js.cookie.js' %}"></script>
+<script src="{% static 'core/js/custom.js' %}"></script>
+
 </body>
 </html>
