@@ -1,5 +1,10 @@
 body {
     background: #c45525;
+    font-family: "Scope One", sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Open Sans", sans-serif;
 }
 
 #section-top-high div{
