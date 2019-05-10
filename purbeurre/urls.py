@@ -23,4 +23,5 @@ urlpatterns = [
     # Local app urls
     path('', include('core.urls'), name='core'),
     path('user/', include('user.urls'), name='user'),
+    path('product/', include('product.urls'), name='product'),
 ]

@@ -13,8 +13,7 @@
                         consommez tous les jours</h2>
                 </div>
                 <div class="col-lg-6 align-self-baseline">
-                    <!-- action="% url 'product:search' %"-->
-                    <form id="mainSearch" class="text-center" action="" method="get"
+                    <form id="mainSearch" class="text-center" action="{% url 'product:search' %}" method="get"
                           accept-charset="utf-8">
                         <div class="input-group">
                             <input id="searchForm" class="form-control" placeholder="Ex: Nutella" name="query">

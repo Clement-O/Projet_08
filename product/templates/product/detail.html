@@ -1,0 +1,102 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+
+    <section class="page-section" id="section-top-high">
+        <div class="container">
+            <div class="text-center">
+                <img src="{{ product.img }}" id="img-section-top" alt="">
+                <h2 class="mt-0" id="title-section-top">{{ product.name }}</h2>
+            </div>
+        </div>
+    </section>
+
+    <section class="page-section" id="section-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="col-lg-12 text-center" id="product-detail-ng">
+                        {% if product.ng == 'a' %}
+                            <img src="{% static 'core/img/ng_a.png' %}" class="img-ng" alt="Nutriscore A">
+                        {% elif product.ng == 'b' %}
+                            <img src="{% static 'core/img/ng_b.png' %}" class="img-ng" alt="Nutriscore B">
+                        {% elif product.ng == 'c' %}
+                            <img src="{% static 'core/img/ng_c.png' %}" class="img-ng" alt="Nutriscore C">
+                        {% elif product.ng == 'd' %}
+                            <img src="{% static 'core/img/ng_d.png' %}" class="img-ng" alt="Nutriscore D">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <table>
+                        <tr>
+                            <th colspan="2" class="text-center">Repères nutritionels pour 100g</th>
+                        </tr>
+                        <tr>
+                            <td>Énergie</td>
+                            {% if product.energy %}
+                                <td class="td">{{ product.energy }} kj</td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <td>Matières grasses / Lipides</td>
+                            {% if product.fat %}
+                                <td class="td">{{ product.fat }} g</td>
+                            {% else %}
+                                <td class="td">Inconnu</td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 10%">dont Acides gras saturés</td>
+                            {% if product.saturated_fat %}
+                                <td class="td">{{ product.saturated_fat }} g</td>
+                            {% else %}
+                                <td class="td">Inconnu</td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <td>Glucides</td>
+                            {% if product.carbohydrate %}
+                                <td class="td">{{ product.carbohydrate }} g</td>
+                            {% else %}
+                                <td class="td">Inconnu</td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 10%">dont sucres</td>
+                            {% if product.sugars %}
+                                <td class="td">{{ product.sugars }} g</td>
+                            {% else %}
+                                <td class="td">Inconnu</td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <td>Protéines</td>
+                            {% if product.proteins %}
+                                <td class="td">{{ product.proteins }} g</td>
+                            {% else %}
+                                <td class="td">Inconnu</td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <td>Sel</td>
+                            {% if product.salt %}
+                                <td class="td">{{ product.salt }} g</td>
+                            {% else %}
+                                <td class="td">Inconnu</td>
+                            {% endif %}
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+            <hr class="divider dark my-4">
+            <div class="col-md-6 offset-md-3">
+                <a target="_blank" href="{{ product.link_off }}" class="btn btn-primary text-center" style="width: 100%">
+                    Fiche OpenFoodFacts
+                </a>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+    <section class="page-section" id="section-top-high">
+        <div class="container">
+            <div class="text-center">
+                <img src="{{ img }}" id="img-section-top" alt="">
+                <h2 class="mt-0" id="title-section-top">{{ name }}</h2>
+            </div>
+        </div>
+    </section>
+
+    <section class="page-section" id="section-main">
+        <div class="container">
+            {% if substitute %}
+                <h2 class="text-center mt-0">Vous pouvez remplacer cet aliment par :</h2>
+                <hr class="divider light">
+                <div class="row">
+                    {% for sub in substitute %}
+                        <div class="col-lg-4 col-md-12 div-sub">
+                            <div class="col-lg-12 float-right div-img-ng">
+                                {% if sub.ng == 'a' %}
+                                    <img src="{% static 'core/img/ng_a.png' %}" class="img-ng" alt="Nutriscore A">
+                                {% elif sub.ng == 'b' %}
+                                    <img src="{% static 'core/img/ng_b.png' %}" class="img-ng" alt="Nutriscore B">
+                                {% elif sub.ng == 'c' %}
+                                    <img src="{% static 'core/img/ng_c.png' %}" class="img-ng" alt="Nutriscore C">
+                                {% elif sub.ng == 'd' %}
+                                    <img src="{% static 'core/img/ng_d.png' %}" class="img-ng" alt="Nutriscore D">
+                                {% endif %}
+                            </div>
+                            <div class="col-lg-12 div-img-sub">
+                                <img src="{{ sub.img }}" class="img-sub" alt="Photo produit">
+                            </div>
+                            <div class="div-link-detail">
+                                <a href="/product/{{ sub.id }}">{{ sub.name }}</a>
+                            </div>
+                            <div class="div-btn-save">
+                                {% csrf_token %}
+                                <input type="hidden" value="{{ sub }}" id="substitute_{{ forloop.counter0 }}">
+                                <button class="btn btn-primary btn-save" id="{{ forloop.counter0 }}">
+                                    <span class="fas fa-save"></span> Sauvegarder
+                                </button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center">
+                    <h2>La recherche n'a donnée aucun résultats, vérifiez les points suivants:</h2>
+                    <ul>
+                        <li>Le produit recherché existe ?</li>
+                        <li>Le produit recherché ne contient pas ou peu de fautes ? (accents ignorés)</li>
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+{% endblock %}

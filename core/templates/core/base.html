@@ -40,8 +40,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto my-2 my-lg-0">
                 <li class="nav-item text-center" id="li-form">
-                    <!-- action="% url 'product:search' %" -->
-                    <form action="" method="get" accept-charset="utf-8">
+                    <form action="{% url 'product:search' %}" method="get" accept-charset="utf-8">
                         <input class="form-control" placeholder="Rechercher" name="query">
                     </form>
                 </li>
@@ -51,7 +50,7 @@
                                 class="fas fa-user fa-2x"></span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger text-center" href="/search/user/"
+                        <a class="nav-link js-scroll-trigger text-center" href="/product/user/"
                            title="Mes produits"><span class="fas fa-carrot fa-2x"></span></a>
                     </li>
                     <li class="nav-item">
