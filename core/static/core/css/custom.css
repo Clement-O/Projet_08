@@ -25,11 +25,6 @@ h1, h2, h3, h4, h5, h6 {
     top: 4px
 }
 
-.fa-sign-out-alt, .fa-sign-in-alt {
-    position: relative;
-    top: 3px
-}
-
 #contact {
     background: #345a61;
 }

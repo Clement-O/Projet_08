@@ -15,6 +15,11 @@ from .refine import RefineSubstitute
 # Create your views here.
 
 def search(request):
+    """
+    Will test if each queries' result is empty or not
+    If one return empty then it send a "No result" to the client
+    If any return empty then it send the product & substitutes to the client
+    """
     # p = product(s). sub = substitute(s). qry = query(ies).
     qry = request.GET.get('query')
     if qry:  # User's query
@@ -39,12 +44,22 @@ def search(request):
                         context.update({'img': head_p['img']})
 
                     return render(request, 'product/search.html', context)
-    # Any sub, product or request
+    # No sub, product or request
     context = {'name': "Aucun résultat"}
     return render(request, 'product/search.html', context)
 
 
 def save(request):
+    """
+    AJAX function, used to save (or update) product in database
+    If user is connected & the product is not already in DB
+        Add product & bind it to the user
+    If user is connected, the product is in DB but not bounded to the user
+        Update the product with the (maybe) new value
+        Add the user to the product
+    If user not connected
+        Do nothing & ask him to login
+    """
     # p = product(s).
     # Convert request.GET string to list with ast.literal_eval()
     sub = ast.literal_eval(request.GET.get('substitute'))
@@ -94,6 +109,9 @@ def save(request):
 
 
 def user(request):
+    """
+    Get the saved products of the user from the database
+    """
     # sub = substitute(s).
     if request.user.is_authenticated:
         sub = Product.objects.filter(users=request.user.id)
@@ -107,6 +125,13 @@ def user(request):
 
 
 def detail(request, product_id):
+    """
+    Get the details of the product
+    If product is in database
+        format the decimal number and use it
+    If product is not in database
+        query openfoodfact and use it
+    """
     # p = product(s).
     if Product.objects.filter(id=product_id).exists():
         # fetch product detail in DB

@@ -6,8 +6,18 @@ import openfoodfacts
 # Local import
 from constants import NUTRITION_GRADES_LIST
 
+""" Module to determine the product researched by the user """
+
 
 class UserInput:
+    """
+    Class to determine the product researched by the user.
+    1. Query OpenFoodFacts.
+    2. Loop over the (max) 20 products returned
+    3. For each product save the first and 2 last english categories &
+        nutrition grades
+    4. Finally use Counter to get the most used categories & nutrition grades
+    """
     # cat = category(ies). ng = nutrition grades. p = product(s).
     # tmp = temporary. lst = list(s). qry = query(ies).
 

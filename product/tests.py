@@ -5,6 +5,8 @@ from .refine import RefineSubstitute
 
 # Create your tests here.
 
+""" Test every server side function (input.py , substitute.py, refine.py) """
+
 
 def test_get_product(monkeypatch):
     query = "nutella"

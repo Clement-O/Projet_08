@@ -1,4 +1,13 @@
+""" Module to refine the substitutes of the product researched by the user """
+
+
 class RefineSubstitute:
+    """
+    Class to refine the substitutes of the product researched by the user
+    1. For Each substitute keep only the essential informations
+        (which will be stored in the Database)
+    2. Sort them by alphabetical nutrition grades
+    """
     # sub = substitute(s).
 
     def __init__(self, products):

@@ -7,7 +7,17 @@ import openfoodfacts
 from product import REGEX_STORES
 
 
+""" Module to find the substitutes of the user's product searched """
+
+
 class SubstituteQueries:
+    """
+    Class to find the substitutes of the user's product searched
+    1. Query OpenFoodFacts
+        (France, Complete, Categories defined in input.py, 150 products max)
+    2. Search the worst nutrition grades product and keep his image
+    3. Use the regex and save every stores' product that match the regex
+    """
     # p = product(s).
 
     def __init__(self, product_param):

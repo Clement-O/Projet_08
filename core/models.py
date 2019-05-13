@@ -5,6 +5,9 @@ from django.db import models
 # Create your models here.
 
 class Product(models.Model):
+    """
+    Create the Product table to stock and use user's saved products
+    """
     id = models.BigIntegerField(primary_key=True)
     name = models.CharField(max_length=200)
     ng = models.CharField(max_length=1)

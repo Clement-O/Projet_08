@@ -9,6 +9,8 @@ from allauth.account.forms import SignupForm
 # Local import
 from .models import CustomUser
 
+""" Module to create Custom User forms """
+
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm):
