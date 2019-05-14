@@ -65,8 +65,7 @@ def save(request):
     sub = ast.literal_eval(request.GET.get('substitute'))
     if request.user.is_authenticated:
         current_user = request.user.id
-        sub_id = sub['id']
-        if Product.objects.filter(id=sub_id, users=current_user).exists():
+        if Product.objects.filter(id=sub['id'], users=current_user).exists():
             data = {
                 'success': False,
                 'message': 'Le produit "' + sub['name'] +
