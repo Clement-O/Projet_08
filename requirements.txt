@@ -13,7 +13,6 @@ more-itertools==7.0.0
 oauthlib==3.0.1
 git+https://github.com/openfoodfacts/openfoodfacts-python
 pluggy==0.11.0
-psycopg2==2.8.2
 psycopg2-binary==2.8.2
 py==1.8.0
 pytest==4.4.2
@@ -21,6 +20,7 @@ pytest-django==3.4.8
 python-dotenv==0.10.1
 python3-openid==3.1.0
 pytz==2019.1
+raven==6.10.0
 requests==2.21.0
 requests-oauthlib==1.2.0
 six==1.12.0
