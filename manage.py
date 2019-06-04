@@ -10,7 +10,11 @@ load_dotenv()
 
 
 def main():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'purbeurre.settings')
+    if os.environ.get('ENV') == 'PRODUCTION':
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE',
+                              'purbeurre.settings.production')
+    else:
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'purbeurre.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

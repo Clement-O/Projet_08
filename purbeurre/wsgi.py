@@ -16,7 +16,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'purbeurre.settings')
+if os.environ.get('ENV') == 'PRODUCTION':
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE',
+                          'purbeurre.settings.production')
+else:
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'purbeurre.settings')
 
 application = get_wsgi_application()
