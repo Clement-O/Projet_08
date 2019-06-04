@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse
 import ast
+import logging
 
 # Third party import
 import openfoodfacts
@@ -11,6 +12,8 @@ from .input import UserInput
 from .substitute import SubstituteQueries
 from .refine import RefineSubstitute
 
+
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 
@@ -99,6 +102,10 @@ def save(request):
                 'message': 'Le produit "' + sub['name'] +
                            '" a bien été ajouté à votre compte'
             }
+            logger.info('New save', exc_info=True, extra={
+                'product_id': p.id,
+                'product_name': p.name
+            })
     else:
         data = {
             'success': False,
