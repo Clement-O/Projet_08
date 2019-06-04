@@ -28,7 +28,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-ALLOWED_HOSTS = ['127.0.0.1', 'purbeurre-coa.herokuapp.com']
 
 # Application definition
 
@@ -90,7 +89,7 @@ DATABASES = {
         'NAME': os.environ.get('DB_NAME'),
         'USER': os.environ.get('DB_USERNAME'),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'HOST': '',
+        'HOST': os.environ.get('DB_HOST'),
         'PORT': '5432',
     }
 }
@@ -155,7 +154,7 @@ ACCOUNT_LOGOUT_REDIRECT_URL = 'home'
 
 LANGUAGE_CODE = 'fr-FR'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Paris'
 
 USE_I18N = True
 
@@ -168,18 +167,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 # SECURITY WARNING: don't run with debug turned on in production!
-if os.environ.get('ENV') == 'PRODUCTION':
+if os.environ.get('ENV') == 'HEROKU':
     DEBUG = False
-
-    # Static files settings
-    PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-
-    STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+    ALLOWED_HOSTS = ['purbeurre-coa.herokuapp.com']
 
     # Extra places for collectstatic to find static files.
     STATICFILES_DIRS = (
-        os.path.join(PROJECT_ROOT, 'static'),
+        os.path.join(BASE_DIR, 'static'),
     )
 
     # Simplified static file serving.
@@ -191,3 +188,4 @@ if os.environ.get('ENV') == 'PRODUCTION':
     DATABASES['default'].update(db_from_env)
 else:
     DEBUG = True
+    ALLOWED_HOSTS = ['127.0.0.1']
