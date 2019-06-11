@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse
+from django.core.paginator import Paginator
 import ast
 import logging
 
@@ -16,6 +17,7 @@ from .refine import RefineSubstitute
 logger = logging.getLogger(__name__)
 
 # Create your views here.
+
 
 def search(request):
     """
@@ -39,9 +41,14 @@ def search(request):
                 if p:  # Substitutes
                     refine = RefineSubstitute(p)
                     sub = refine.product_infos()
+
+                    paginator = Paginator(sub, 9)
+                    page = request.GET.get('page')
+                    subs = paginator.get_page(page)
+
                     context = {
                         'name': qry,
-                        'substitute': sub
+                        'substitute': subs
                     }
                     if head_p:
                         context.update({'img': head_p['img']})
