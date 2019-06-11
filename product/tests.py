@@ -1,5 +1,5 @@
-# Third party import
-import openfoodfacts
+from django.test import TestCase
+from unittest import mock
 
 # Local import
 from .input import UserInput
@@ -85,83 +85,81 @@ products = [
 ]
 
 
-def test_get_product(monkeypatch):
-    def mockreturn(request):
-        return {'count': 6, 'products': products}
-    monkeypatch.setattr(openfoodfacts.products, 'search', mockreturn)
+class UserInputTestCase(TestCase):
+    @mock.patch('openfoodfacts.products')
+    def test_user_input(self, mock_off):
+        mock_off.search.return_value = {'count': 6, 'products': products}
 
-    user_input = UserInput('InputUser')
+        user_input = UserInput('InputUser')
+        p_param = user_input.get_product()
 
-    p_param = user_input.get_product()
-    # Make sure result are expected
-    assert len(p_param) == 4
-    assert p_param['cat_1'] == 'en:cat_1'
-    assert p_param['cat_2'] == 'en:cat_3'
-    assert p_param['cat_3'] == 'en:cat_4'
-    assert p_param['ng'] == ['a', 'b', 'c', 'd']
-    # Make sure minority 'cat' aren't in the result
-    assert 'en:cat_5' not in p_param
-    assert 'fr:cat_1' not in p_param
-    assert 'fr:cat_2' not in p_param
-    assert 'fr:cat_3' not in p_param
-    assert 'de:cat_1' not in p_param
-    assert 'es:cat_2' not in p_param
-
-
-def test_substitute_queries(monkeypatch):
-    def mockreturn(request):
-        return {'products': products}
-    monkeypatch.setattr(openfoodfacts.products, 'advanced_search', mockreturn)
-
-    p_param = {
-        'cat_1': 'value_1',
-        'cat_2': 'value_2',
-        'cat_3': 'value_3',
-        'ng': ['a', 'b', 'c', 'd']
-    }
-
-    sub_query = SubstituteQueries(p_param)
-
-    advanced_search = sub_query.query_off()
-    # Make sure mock worked
-    assert len(advanced_search) == 6
-
-    head = sub_query.get_head_product(advanced_search)
-    # Make sure it's the image of the first worst nutrition grades
-    # (even if lacking some infos)
-    assert {'img': 'some_img_4'} == head    # e, ID_4
-    assert {'img': 'some_img_1'} != head    # d, ID_1
-    assert {'img': 'some_img_2'} != head    # a, ID_2 & ID_6
-    assert {'img': 'some_img_3'} != head    # b, ID_3
-    assert {'img': 'some_img_5'} != head    # None, ID_5
-
-    substitute = sub_query.get_substitute(products)
-    # Make sure products with
-    # no stores (or not in the constants.py STORE_LIST)
-    # or nutrition grades
-    # or is a duplicate ID aren't considered as substitute
-    assert 'ID_1' not in substitute  # No stores
-    assert 'ID_3' not in substitute  # Not in STORE_LIST
-    assert 'ID_4' not in substitute  # No stores
-    assert 'ID_5' not in substitute  # No nutrition grades
-    assert 'Double_Product_2' not in substitute  # Duplicate ID
-    # Make sure the function worked as intended
-    assert len(substitute) == 1
-    assert substitute[0]['id'] == 'ID_2'
+        # Assert
+        mock_off.search.assert_called_once_with('InputUser')
+        mock_off.search.status_code = 200
+        self.assertEqual(len(p_param), 4)
+        self.assertEqual(p_param['cat_1'], 'en:cat_1')
+        self.assertEqual(p_param['cat_2'], 'en:cat_3')
+        self.assertEqual(p_param['cat_3'], 'en:cat_4')
+        self.assertEqual(p_param['ng'], ['a', 'b', 'c', 'd'])
+        # Test if minority categories ('cat') aren't in the result
+        ignored_cat = [
+            'en:cat_5', 'fr:cat_1', 'fr:cat_2',
+            'fr:cat_3', 'de:cat_1', 'es:cat_2'
+        ]
+        for cat in ignored_cat:
+            self.assertNotIn(cat, p_param)
 
 
-def test_product_infos():
+class SubstituteQueriesTestCase(TestCase):
+    @mock.patch('openfoodfacts.products')
+    def test_substitute_queries(self, mock_off):
+        mock_off.advanced_search.return_value = {'products': products}
 
-    refine = RefineSubstitute(products)
-    result = refine.product_infos()
+        p_param = {
+            'cat_1': 'value_1',
+            'cat_2': 'value_2',
+            'cat_3': 'value_3',
+            'ng': ['a', 'b', 'c', 'd']
+        }
 
-    # Second product (ID_2) should be first (best nutrition grades)
-    # First product (ID_1) should be second (worst nutrition grades)
-    assert result[0]['id'] == 'ID_2'
-    assert result[1]['id'] == 'ID_1'
-    # All others products (ID_3 to ID_6) should be ignored
-    #   => (not enough data to keep it)
-    assert 'ID_3' not in result
-    assert 'ID_4' not in result
-    assert 'ID_5' not in result
-    assert 'ID_6' not in result
+        sub_query = SubstituteQueries(p_param)
+        advanced_search = sub_query.query_off()
+        # Make sure mock worked
+        mock_off.advanced_search.status_code = 200
+        self.assertEqual(len(advanced_search), 6)
+
+        head = sub_query.get_head_product(advanced_search)
+        # Test if the image of the first worst nutrition grades is the result
+        # And test if others are not
+        self.assertEqual(head['img'], 'some_img_4')
+        ignored_img = ['some_img_1', 'some_img_2', 'some_img_3', 'some_img_5']
+        for img in ignored_img:
+            self.assertNotEqual(img, head['img'])
+
+        substitute = sub_query.get_substitute(products)
+        # Make sure products with
+        # no stores (or not in the constants.py STORE_LIST)
+        # or nutrition grades
+        # or is a duplicate ID aren't considered as substitute
+        ignored_product = ['ID_1', 'ID_3', 'ID_4', 'ID_5', 'Double_Product_2']
+        for p in ignored_product:
+            self.assertNotIn(p, substitute)
+        # Make sure the function worked as intended
+        self.assertEqual(len(substitute), 1)
+        self.assertEqual(substitute[0]['id'], 'ID_2')
+
+
+class RefineSubstituteTestCase(TestCase):
+    def test_refine_substitute(self):
+        refine = RefineSubstitute(products)
+        result = refine.product_infos()
+
+        # Second product (ID_2) should be first (best nutrition grades)
+        # First product (ID_1) should be second (worst nutrition grades)
+        self.assertEqual(result[0]['id'], 'ID_2')
+        self.assertEqual(result[1]['id'], 'ID_1')
+        # All others products (ID_3 to ID_6) should be ignored
+        #   => (not enough data to keep it)
+        ignored_product = ['ID_3', 'ID_4', 'ID_5', 'ID_6']
+        for p in ignored_product:
+            self.assertNotIn(p, result)
