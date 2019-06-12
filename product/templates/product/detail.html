@@ -96,6 +96,22 @@
                     Fiche OpenFoodFacts
                 </a>
             </div>
+            {% if not saved %}
+                <div class="col-md-6 offset-md-3" style="padding-top: 10px">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{ product }}" id="substitute_1">
+                    <button class="btn btn-primary btn-save btn-save-detail" id="1">
+                        <span class="fas fa-save"></span> Sauvegarder
+                    </button>
+                </div>
+            {% endif %}
+            <div class="col-md-6 offset-md-3" style="padding-top: 10px">
+                {% if from_search %}
+                    <a href="javascript:history.back()" class="btn btn-primary text-center" style="width: 100%">Retour à la recherche</a>
+                {% else %}
+                    <a href="javascript:history.back()" class="btn btn-primary text-center" style="width: 100%">Retour à vos produits</a>
+                {% endif %}
+            </div>
         </div>
     </section>
 

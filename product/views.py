@@ -145,10 +145,24 @@ def detail(request, product_id):
     If product is not in database
         query openfoodfact and use it
     """
+
     # p = product(s).
     if Product.objects.filter(id=product_id).exists():
-        # fetch product detail in DB
+        # fetch product details in DB
         p = Product.objects.get(id=product_id)
+        current_user = request.user.id
+        prev_page = request.META.get('HTTP_REFERER')
+        # Check if the previous page was a search or the user's products
+        if prev_page[-5:] == 'user/':
+            context = {'from_search': False}
+        else:
+            context = {'from_search': True}
+        # Check if the product is already saved for the current user
+        if p.users.filter(id=current_user).exists():
+            context['saved'] = True
+        else:
+            context['saved'] = False
+
         try:
             p.energy = p.energy.normalize()
             p.fat = p.fat.normalize()
@@ -157,14 +171,18 @@ def detail(request, product_id):
             p.sugars = p.sugars.normalize()
             p.proteins = p.proteins.normalize()
             p.salt = p.salt.normalize()
-            context = {'product': p}
+            context['product'] = p
         except AttributeError:
-            context = {'product': p}
+            context['product'] = p
+
     else:
-        # fetch product detail on OpenFoodFacts
+        # fetch product details on OpenFoodFacts
+        # saved is False otherwise the product have been retrieved from DB
+        # from_search is true for the same reason
         p = openfoodfacts.products.get_product(str(product_id))
         off_link = 'https://fr.openfoodfacts.org/produit/'
         context = {'product': {
+            'id': product_id,
             'name': p['product']['product_name'],
             'ng': p['product']['nutrition_grades'],
             'img': p['product']['selected_images']['front']['display']['fr'],
@@ -176,5 +194,5 @@ def detail(request, product_id):
             'sugars': p['product']['nutriments']['sugars_100g'],
             'proteins': p['product']['nutriments']['proteins_100g'],
             'salt': p['product']['nutriments']['salt_100g']
-        }}
+        }, 'saved': False, 'from_search': True}
     return render(request, 'product/detail.html', context)
