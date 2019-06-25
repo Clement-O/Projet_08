@@ -8,9 +8,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# COMMENT TEST FOR CRON ON PROD (Test if git pull work)
-# SECOND TEST
-
 
 def main():
     if os.environ.get('ENV') == 'PRODUCTION':

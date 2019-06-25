@@ -45,6 +45,23 @@
                         </div>
                     {% endfor %}
                 </div>
+                <div class="pagination" id="pagination-div">
+                        <span class="step-links" style="margin: auto">
+                            {% if substitute.has_previous %}
+                                <a href="?query={{ name }}&page=1">&laquo; Première</a>
+                                <a href="?query={{ name }}&page={{ substitute.previous_page_number }}">précédente</a>
+                            {% endif %}
+
+                            <span class="current">
+                                Page {{ substitute.number }} sur {{ substitute.paginator.num_pages }}.
+                            </span>
+
+                            {% if substitute.has_next %}
+                                <a href="?query={{ name }}&page={{ substitute.next_page_number }}">suivante</a>
+                                <a href="?query={{ name }}&page={{ substitute.paginator.num_pages }}">dernière &raquo;</a>
+                            {% endif %}
+                        </span>
+                    </div>
             {% else %}
                 <div class="text-center">
                     <h2>La recherche n'a donné aucun résultat, vérifiez les points suivants:</h2>
